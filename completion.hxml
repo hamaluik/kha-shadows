@@ -1,6 +1,8 @@
--cp Kha\Sources
--cp Kha\Backends\HTML5
+-cp Kha/Sources
+-cp Kha/Backends/HTML5
 -cp Sources
+-cp Libraries/glm/src
+-D glm
 -D sys_g1
 -D sys_g2
 -D sys_g3
@@ -22,8 +24,8 @@
 -D kha_html5_js
 -D kha
 -D kha_version=1611
--D kha_output=build\html5
+-D kha_output=build/html5
 -D completion
--js build\html5\kha.js
--dce full
+-D thx_core
+-js build/html5/kha.js
 -main Main

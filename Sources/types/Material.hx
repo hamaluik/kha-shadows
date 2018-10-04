@@ -62,22 +62,41 @@ class Material {
         structure.add("position", VertexData.Float3);
         structure.add("normal", VertexData.Float3);
 
-        var pipeline:PipelineState = new PipelineState();
-        pipeline.inputLayout = [structure];
-        pipeline.vertexShader = Shaders.mesh_vert;
-        pipeline.fragmentShader = Shaders.mesh_frag;
-        pipeline.cullMode = CullMode.None;
-        pipeline.depthMode = CompareMode.Less;
-        pipeline.depthWrite = true;
-        pipeline.compile();
+        var pipe:PipelineState = new PipelineState();
+        pipe.inputLayout = [structure];
+        pipe.vertexShader = Shaders.mesh_vert;
+        pipe.fragmentShader = Shaders.mesh_frag;
+        pipe.cullMode = CullMode.None;
+        pipe.depthMode = CompareMode.Less;
+        pipe.depthWrite = true;
+        pipe.compile();
 
         var mat:Material = new Material(
-            pipeline,
+            pipe,
             ["MVP", "M", "lightDirection", "ambientColour", "albedoColour"]
         );
         mat.setProperty("lightDirection", Direction(new Vec3(0, 1, 0)));
         mat.setProperty("ambientColour", Colour3(Color.fromFloats(0.05, 0.05, 0.05)));
         mat.setProperty("albedoColour", Colour3(Color.White));
+        return mat;
+    }
+
+    public static function screen():Material {
+        var structure:VertexStructure = new VertexStructure();
+        structure.add("position", VertexData.Float2);
+
+        var pipe:PipelineState = new PipelineState();
+        pipe.inputLayout = [structure];
+        pipe.vertexShader = Shaders.post_vert;
+        pipe.fragmentShader = Shaders.post_frag;
+        pipe.cullMode = CullMode.CounterClockwise;
+        pipe.depthMode = CompareMode.Always;
+        pipe.depthWrite = false;
+        pipe.compile();
+
+        var mat:Material = new Material(
+            pipe, []
+        );
         return mat;
     }
 }

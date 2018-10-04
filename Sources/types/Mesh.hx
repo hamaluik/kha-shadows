@@ -11,9 +11,9 @@ class Mesh {
     public var vertexBuffer:VertexBuffer;
     public var indexBuffer:IndexBuffer;
 
-    public function new(vertices:Array<Float>, vertexStructure:VertexStructure, indices:Array<Int>) {
+    public function new(numVerts:Int, vertices:Array<Float>, vertexStructure:VertexStructure, indices:Array<Int>) {
         vertexBuffer = new VertexBuffer(
-            Std.int(vertices.length / 6),
+            numVerts,
             vertexStructure,
             Usage.StaticUsage
         );
@@ -52,6 +52,24 @@ class Mesh {
             2, 3, 0
         ];
 
-        return new Mesh(vertices, structure, indices);
+        return new Mesh(4, vertices, structure, indices);
+    }
+
+    public static function screen():Mesh {
+        var structure:VertexStructure = new VertexStructure();
+        structure.add("position", VertexData.Float2);
+
+        var vertices:Array<Float> = [
+            -1, -1,
+            -1,  1,
+             1,  1,
+             1, -1,
+        ];
+        var indices:Array<Int> = [
+            0, 1, 2,
+            2, 3, 0
+        ];
+
+        return new Mesh(4, vertices, structure, indices);
     }
 }
